@@ -34,7 +34,12 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
     public void onAuthenticationError(int errMsgId,
                                       CharSequence errString) {
         if (!selfCancelled) {
-            mCallback.onError(errString.toString());
+            if (errMsgId == FingerprintManager.FINGERPRINT_ERROR_CANCELED) {
+                mCallback.onCancelled();
+            }
+            else {
+                mCallback.onError(errString.toString());
+            }
         }
     }
 
